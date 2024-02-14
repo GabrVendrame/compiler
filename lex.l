@@ -1,50 +1,57 @@
+%option noyywrap
 %{
-#include <stdio.h>
+    #include "semantic.h"
+    #include "sintax.tab.h"
 %}
 
 
 %%
 
-"if"                                    { printf("PALAVRA RESERVADA: %s\n", yytext); }
-"else"                                  { printf("PALAVRA RESERVADA: %s\n", yytext); }
-"for"                                   { printf("PALAVRA RESERVADA: %s\n", yytext); }
-"int"                                   { printf("PALAVRA RESERVADA: %s\n", yytext); }
-"float"                                 { printf("PALAVRA RESERVADA: %s\n", yytext); }
-"char"                                  { printf("PALAVRA RESERVADA: %s\n", yytext); }
-"void"                                  { printf("PALAVRA RESERVADA: %s\n", yytext); }
-"return"                                { printf("PALAVRA RESERVADA: %s\n", yytext); }
-"main"                                  { printf("PALAVRA RESERVADA: %s\n", yytext); }
-[a-zA-Z_][a-zA-Z0-9_]*                  { printf("IDENTIFIER: %s\n", yytext); }
--?[0-9]+(\.[0-9]+([eE][-+]?[0-9]+)?)?   { printf("NUMBER: %s\n", yytext); }
-\"([^"\\]|\\.)*\"                       { printf("STRING: %s\n", yytext); }
-"="                                     { printf("ATRIB %s\n", yytext); }
-"=="                                    { printf("IGUAL %s\n", yytext); }
-"+"                                     { printf("SOMA %s\n", yytext); }
-"-"                                     { printf("SUB %s\n", yytext); }
-"*"                                     { printf("MULT %s\n", yytext); }
-"//".*                                  { /* Ignora comentários de linha única */ }
-"/"                                     { printf("DIV %s\n", yytext); }
-"<"                                     { printf("MENOR %s\n", yytext); }
-"<="                                    { printf("MENORIGUAL %s\n", yytext); }
-">"                                     { printf("MAIOR %s\n", yytext); }
-">="                                    { printf("MAIORIGUAL %s\n", yytext); }
-"!="                                    { printf("DIFERENTE %s\n", yytext); }
-"\("                                    { printf("ABREPAR %s\n", yytext); }
-"\)"                                    { printf("FECHAPAR %s\n", yytext); }
-"\{"                                    { printf("ABRECHAVE %s\n", yytext); }
-"\}"                                    { printf("FECHACHAVE %s\n", yytext); }
-";"                                     { printf("PONTOVIRGULA %s\n", yytext); }
-","                                     { printf("VIRGULA %s\n", yytext); }
-[ \t\n]+                                { /* Ignora espaços em branco */ }
-.                                       { printf("UNRECOGNIZED: %s\n", yytext); }
+"inteiro" { yylval.typeC = 'a'; return TK_TYPE; }
+"real" { yylval.typeC = 'b'; return TK_TYPE; }
+"caracter" { yylval.typeC = 'c'; return TK_TYPE; }
+"frase" { yylval.typeC = 'd'; return TK_TYPE; }
+
+"class" { printf("%s\n", yytext); return TK_CLASS; }
+"new" { printf("%s\n", yytext); return TK_NEW; }
+"main" { printf("%s\n", yytext); return TK_MAIN; }
+"se" { printf("%s\n", yytext); return TK_IF; }
+"senao" { printf("%s\n", yytext); return TK_ELSE; }
+"enquanto" { printf("%s\n", yytext); return TK_WHILE; }
+"print" { printf("%s\n", yytext); return TK_PRINT; }
+"scan" { printf("%s\n", yytext); return TK_SCAN; }
+"vetor" { printf("%s\n", yytext); return TK_VECTOR; }
+
+[a-zA-Z][a-zA-Z0-9]* { yylval.id = lookUp(yytext); return TK_ID; }
+[0-9]+"."+[0-9]+ |
+[0-9]+ { yylval.d = atof(yytext); return TK_NUMBER; }
+
+"+"	|
+"-" |
+"*"	|
+"/"	|
+"="	|
+"|"	|
+","	|
+";"	|
+":"	|
+"."	|
+"["	|
+"]"	|
+"{"	|
+"}"	|
+"("	|
+")"	{ return yytext[0]; }
+
+"<" | { yylval.fn = 1; return TK_CMP; }
+">" | { yylval.fn = 2; return TK_CMP; }
+"!=" | { yylval.fn = 3; return TK_CMP; }
+"<=" | { yylval.fn = 4; return TK_CMP; }
+">=" | { yylval.fn = 5; return TK_CMP; }
+"==" | { yylval.fn = 6; return TK_CMP; }
+
+"//".* { /*regex para ignorar comentarios*/ }
+[ \t\n] { /*regex para ignorar espacos em branco*/ }
+. { yyerror("Caractere não reconhecido\n"); }
 
 %%
-
-int yywrap() {
-    return 1;
-}
-
-int main(void) {
-    yylex();
-    return 0;
-}
