@@ -4,4 +4,7 @@
 
 *.yy.c
 
-output.*
+output.txt
+classOutput.txt
+
+input.*

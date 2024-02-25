@@ -1,0 +1,2112 @@
+Terminals unused in grammar
+
+    '|'
+    '.'
+    ':'
+    '"'
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: classes funcoes main
+
+    2 classe: TK_CLASS TK_ID '{' declaracao '}'
+
+    3 classes: ε
+    4        | classe classes
+
+    5 funcao: TK_FUNC TK_ID '(' parametros ')' '{' comandos TK_RETURN expressao ';' '}'
+    6       | TK_FUNC TK_ID '(' parametros ')' '{' comandos TK_RETURN expressao_booleana ';' '}'
+
+    7 funcoes: ε
+    8        | funcao funcoes
+
+    9 parametros: ε
+   10           | tipo TK_ID
+   11           | tipo TK_ID ',' parametrosAux
+
+   12 parametrosAux: tipo TK_ID
+   13              | tipo TK_ID ',' parametrosAux
+
+   14 main: TK_MAIN '(' ')' '{' comandos '}'
+
+   15 comandos: ε
+   16         | declaracao comandos
+   17         | atribuicao comandos
+   18         | expressao_condicional comandos
+   19         | expressao_repeticao comandos
+   20         | expressao_scan comandos
+   21         | expressao_print comandos
+
+   22 declaracao: tipo atribuicao
+   23           | tipo_array atribuicao
+   24           | tipo_classe atribuicao
+
+   25 atribuicao: TK_ID '=' expressao ';'
+   26           | TK_ID '=' '[' conteudo_array ']' ';'
+   27           | TK_ID '=' TK_NEW TK_ID '(' ')' ';'
+
+   28 conteudo_array: ε
+   29               | expressao
+   30               | expressao ',' conteudo_arrayAux
+
+   31 conteudo_arrayAux: expressao
+   32                  | expressao ',' conteudo_arrayAux
+
+   33 tipo: TK_INT
+   34     | TK_FLOAT
+   35     | TK_CHAR
+   36     | TK_STRING
+
+   37 tipo_array: TK_ARRAY '<' tipo '>'
+
+   38 tipo_classe: TK_ID
+
+   39 expressao: termo expressaoAux
+
+   40 expressaoAux: ε
+   41             | '-' termo expressaoAux
+   42             | '+' termo expressaoAux
+
+   43 termo: fator termoAux
+
+   44 termoAux: ε
+   45         | '*' fator termoAux
+   46         | '/' fator termoAux
+   47         | '%' fator termoAux
+
+   48 fator: TK_ID
+   49      | TK_NUMBER
+   50      | TK_PALAVRA
+   51      | '(' expressao ')'
+
+   52 expressao_condicional: TK_IF '(' expressao_booleana ')' '{' comandos '}'
+   53                      | TK_IF '(' expressao_booleana ')' '{' comandos '}' TK_ELSE '{' comandos '}'
+
+   54 expressao_booleana: termo_booleano expressao_booleanaAux
+
+   55 expressao_booleanaAux: ε
+   56                      | TK_OR termo_booleano expressao_booleanaAux
+
+   57 termo_booleano: fator_booleano termo_booleanoAux
+
+   58 termo_booleanoAux: ε
+   59                  | TK_AND fator_booleano termo_booleanoAux
+
+   60 fator_booleano: TK_NOT comparacao
+   61               | comparacao
+   62               | TK_NOT '(' expressao_booleana ')'
+   63               | '(' expressao_booleana ')'
+
+   64 comparacao: expressao op_logico expressao
+
+   65 op_logico: '<'
+   66          | '>'
+   67          | TK_NE
+   68          | TK_LE
+   69          | TK_GE
+   70          | TK_EQ
+
+   71 expressao_repeticao: TK_WHILE '(' expressao_booleana ')' '{' comandos '}'
+
+   72 expressao_scan: TK_SCAN '(' TK_ID ')' ';'
+
+   73 expressao_print: TK_PRINT '(' expressao ')' ';'
+   74                | TK_PRINT '(' expressao_booleana ')' ';'
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '"' (34)
+    '%' (37) 47
+    '(' (40) 5 6 14 27 51 52 53 62 63 71 72 73 74
+    ')' (41) 5 6 14 27 51 52 53 62 63 71 72 73 74
+    '*' (42) 45
+    '+' (43) 42
+    ',' (44) 11 13 30 32
+    '-' (45) 41
+    '.' (46)
+    '/' (47) 46
+    ':' (58)
+    ';' (59) 5 6 25 26 27 72 73 74
+    '<' (60) 37 65
+    '=' (61) 25 26 27
+    '>' (62) 37 66
+    '[' (91) 26
+    ']' (93) 26
+    '{' (123) 2 5 6 14 52 53 71
+    '|' (124)
+    '}' (125) 2 5 6 14 52 53 71
+    error (256)
+    TK_INT (258) 33
+    TK_FLOAT (259) 34
+    TK_CHAR (260) 35
+    TK_STRING (261) 36
+    TK_ARRAY (262) 37
+    TK_CLASS (263) 2
+    TK_MAIN (264) 14
+    TK_FUNC (265) 5 6
+    TK_RETURN (266) 5 6
+    TK_NEW (267) 27
+    TK_IF (268) 52 53
+    TK_ELSE (269) 53
+    TK_WHILE (270) 71
+    TK_PRINT (271) 73 74
+    TK_SCAN (272) 72
+    TK_NUMBER (273) 49
+    TK_ID (274) 2 5 6 10 11 12 13 25 26 27 38 48 72
+    TK_PALAVRA (275) 50
+    TK_NE (276) 67
+    TK_LE (277) 68
+    TK_GE (278) 69
+    TK_EQ (279) 70
+    TK_OR (280) 56
+    TK_AND (281) 59
+    TK_NOT (282) 60 62
+
+
+Nonterminals, with rules where they appear
+
+    $accept (48)
+        on left: 0
+    program (49)
+        on left: 1
+        on right: 0
+    classe (50)
+        on left: 2
+        on right: 4
+    classes (51)
+        on left: 3 4
+        on right: 1 4
+    funcao (52)
+        on left: 5 6
+        on right: 8
+    funcoes (53)
+        on left: 7 8
+        on right: 1 8
+    parametros (54)
+        on left: 9 10 11
+        on right: 5 6
+    parametrosAux (55)
+        on left: 12 13
+        on right: 11 13
+    main (56)
+        on left: 14
+        on right: 1
+    comandos (57)
+        on left: 15 16 17 18 19 20 21
+        on right: 5 6 14 16 17 18 19 20 21 52 53 71
+    declaracao (58)
+        on left: 22 23 24
+        on right: 2 16
+    atribuicao (59)
+        on left: 25 26 27
+        on right: 17 22 23 24
+    conteudo_array (60)
+        on left: 28 29 30
+        on right: 26
+    conteudo_arrayAux (61)
+        on left: 31 32
+        on right: 30 32
+    tipo (62)
+        on left: 33 34 35 36
+        on right: 10 11 12 13 22 37
+    tipo_array (63)
+        on left: 37
+        on right: 23
+    tipo_classe (64)
+        on left: 38
+        on right: 24
+    expressao (65)
+        on left: 39
+        on right: 5 25 29 30 31 32 51 64 73
+    expressaoAux (66)
+        on left: 40 41 42
+        on right: 39 41 42
+    termo (67)
+        on left: 43
+        on right: 39 41 42
+    termoAux (68)
+        on left: 44 45 46 47
+        on right: 43 45 46 47
+    fator (69)
+        on left: 48 49 50 51
+        on right: 43 45 46 47
+    expressao_condicional (70)
+        on left: 52 53
+        on right: 18
+    expressao_booleana (71)
+        on left: 54
+        on right: 6 52 53 62 63 71 74
+    expressao_booleanaAux (72)
+        on left: 55 56
+        on right: 54 56
+    termo_booleano (73)
+        on left: 57
+        on right: 54 56
+    termo_booleanoAux (74)
+        on left: 58 59
+        on right: 57 59
+    fator_booleano (75)
+        on left: 60 61 62 63
+        on right: 57 59
+    comparacao (76)
+        on left: 64
+        on right: 60 61
+    op_logico (77)
+        on left: 65 66 67 68 69 70
+        on right: 64
+    expressao_repeticao (78)
+        on left: 71
+        on right: 19
+    expressao_scan (79)
+        on left: 72
+        on right: 20
+    expressao_print (80)
+        on left: 73 74
+        on right: 21
+
+
+State 0
+
+    0 $accept: • program $end
+
+    TK_CLASS  shift, and go to state 1
+
+    $default  reduce using rule 3 (classes)
+
+    program  go to state 2
+    classe   go to state 3
+    classes  go to state 4
+
+
+State 1
+
+    2 classe: TK_CLASS • TK_ID '{' declaracao '}'
+
+    TK_ID  shift, and go to state 5
+
+
+State 2
+
+    0 $accept: program • $end
+
+    $end  shift, and go to state 6
+
+
+State 3
+
+    4 classes: classe • classes
+
+    TK_CLASS  shift, and go to state 1
+
+    $default  reduce using rule 3 (classes)
+
+    classe   go to state 3
+    classes  go to state 7
+
+
+State 4
+
+    1 program: classes • funcoes main
+
+    TK_FUNC  shift, and go to state 8
+
+    $default  reduce using rule 7 (funcoes)
+
+    funcao   go to state 9
+    funcoes  go to state 10
+
+
+State 5
+
+    2 classe: TK_CLASS TK_ID • '{' declaracao '}'
+
+    '{'  shift, and go to state 11
+
+
+State 6
+
+    0 $accept: program $end •
+
+    $default  accept
+
+
+State 7
+
+    4 classes: classe classes •
+
+    $default  reduce using rule 4 (classes)
+
+
+State 8
+
+    5 funcao: TK_FUNC • TK_ID '(' parametros ')' '{' comandos TK_RETURN expressao ';' '}'
+    6       | TK_FUNC • TK_ID '(' parametros ')' '{' comandos TK_RETURN expressao_booleana ';' '}'
+
+    TK_ID  shift, and go to state 12
+
+
+State 9
+
+    8 funcoes: funcao • funcoes
+
+    TK_FUNC  shift, and go to state 8
+
+    $default  reduce using rule 7 (funcoes)
+
+    funcao   go to state 9
+    funcoes  go to state 13
+
+
+State 10
+
+    1 program: classes funcoes • main
+
+    TK_MAIN  shift, and go to state 14
+
+    main  go to state 15
+
+
+State 11
+
+    2 classe: TK_CLASS TK_ID '{' • declaracao '}'
+
+    TK_INT     shift, and go to state 16
+    TK_FLOAT   shift, and go to state 17
+    TK_CHAR    shift, and go to state 18
+    TK_STRING  shift, and go to state 19
+    TK_ARRAY   shift, and go to state 20
+    TK_ID      shift, and go to state 21
+
+    declaracao   go to state 22
+    tipo         go to state 23
+    tipo_array   go to state 24
+    tipo_classe  go to state 25
+
+
+State 12
+
+    5 funcao: TK_FUNC TK_ID • '(' parametros ')' '{' comandos TK_RETURN expressao ';' '}'
+    6       | TK_FUNC TK_ID • '(' parametros ')' '{' comandos TK_RETURN expressao_booleana ';' '}'
+
+    '('  shift, and go to state 26
+
+
+State 13
+
+    8 funcoes: funcao funcoes •
+
+    $default  reduce using rule 8 (funcoes)
+
+
+State 14
+
+   14 main: TK_MAIN • '(' ')' '{' comandos '}'
+
+    '('  shift, and go to state 27
+
+
+State 15
+
+    1 program: classes funcoes main •
+
+    $default  reduce using rule 1 (program)
+
+
+State 16
+
+   33 tipo: TK_INT •
+
+    $default  reduce using rule 33 (tipo)
+
+
+State 17
+
+   34 tipo: TK_FLOAT •
+
+    $default  reduce using rule 34 (tipo)
+
+
+State 18
+
+   35 tipo: TK_CHAR •
+
+    $default  reduce using rule 35 (tipo)
+
+
+State 19
+
+   36 tipo: TK_STRING •
+
+    $default  reduce using rule 36 (tipo)
+
+
+State 20
+
+   37 tipo_array: TK_ARRAY • '<' tipo '>'
+
+    '<'  shift, and go to state 28
+
+
+State 21
+
+   38 tipo_classe: TK_ID •
+
+    $default  reduce using rule 38 (tipo_classe)
+
+
+State 22
+
+    2 classe: TK_CLASS TK_ID '{' declaracao • '}'
+
+    '}'  shift, and go to state 29
+
+
+State 23
+
+   22 declaracao: tipo • atribuicao
+
+    TK_ID  shift, and go to state 30
+
+    atribuicao  go to state 31
+
+
+State 24
+
+   23 declaracao: tipo_array • atribuicao
+
+    TK_ID  shift, and go to state 30
+
+    atribuicao  go to state 32
+
+
+State 25
+
+   24 declaracao: tipo_classe • atribuicao
+
+    TK_ID  shift, and go to state 30
+
+    atribuicao  go to state 33
+
+
+State 26
+
+    5 funcao: TK_FUNC TK_ID '(' • parametros ')' '{' comandos TK_RETURN expressao ';' '}'
+    6       | TK_FUNC TK_ID '(' • parametros ')' '{' comandos TK_RETURN expressao_booleana ';' '}'
+
+    TK_INT     shift, and go to state 16
+    TK_FLOAT   shift, and go to state 17
+    TK_CHAR    shift, and go to state 18
+    TK_STRING  shift, and go to state 19
+
+    $default  reduce using rule 9 (parametros)
+
+    parametros  go to state 34
+    tipo        go to state 35
+
+
+State 27
+
+   14 main: TK_MAIN '(' • ')' '{' comandos '}'
+
+    ')'  shift, and go to state 36
+
+
+State 28
+
+   37 tipo_array: TK_ARRAY '<' • tipo '>'
+
+    TK_INT     shift, and go to state 16
+    TK_FLOAT   shift, and go to state 17
+    TK_CHAR    shift, and go to state 18
+    TK_STRING  shift, and go to state 19
+
+    tipo  go to state 37
+
+
+State 29
+
+    2 classe: TK_CLASS TK_ID '{' declaracao '}' •
+
+    $default  reduce using rule 2 (classe)
+
+
+State 30
+
+   25 atribuicao: TK_ID • '=' expressao ';'
+   26           | TK_ID • '=' '[' conteudo_array ']' ';'
+   27           | TK_ID • '=' TK_NEW TK_ID '(' ')' ';'
+
+    '='  shift, and go to state 38
+
+
+State 31
+
+   22 declaracao: tipo atribuicao •
+
+    $default  reduce using rule 22 (declaracao)
+
+
+State 32
+
+   23 declaracao: tipo_array atribuicao •
+
+    $default  reduce using rule 23 (declaracao)
+
+
+State 33
+
+   24 declaracao: tipo_classe atribuicao •
+
+    $default  reduce using rule 24 (declaracao)
+
+
+State 34
+
+    5 funcao: TK_FUNC TK_ID '(' parametros • ')' '{' comandos TK_RETURN expressao ';' '}'
+    6       | TK_FUNC TK_ID '(' parametros • ')' '{' comandos TK_RETURN expressao_booleana ';' '}'
+
+    ')'  shift, and go to state 39
+
+
+State 35
+
+   10 parametros: tipo • TK_ID
+   11           | tipo • TK_ID ',' parametrosAux
+
+    TK_ID  shift, and go to state 40
+
+
+State 36
+
+   14 main: TK_MAIN '(' ')' • '{' comandos '}'
+
+    '{'  shift, and go to state 41
+
+
+State 37
+
+   37 tipo_array: TK_ARRAY '<' tipo • '>'
+
+    '>'  shift, and go to state 42
+
+
+State 38
+
+   25 atribuicao: TK_ID '=' • expressao ';'
+   26           | TK_ID '=' • '[' conteudo_array ']' ';'
+   27           | TK_ID '=' • TK_NEW TK_ID '(' ')' ';'
+
+    TK_NEW      shift, and go to state 43
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    '('         shift, and go to state 47
+    '['         shift, and go to state 48
+
+    expressao  go to state 49
+    termo      go to state 50
+    fator      go to state 51
+
+
+State 39
+
+    5 funcao: TK_FUNC TK_ID '(' parametros ')' • '{' comandos TK_RETURN expressao ';' '}'
+    6       | TK_FUNC TK_ID '(' parametros ')' • '{' comandos TK_RETURN expressao_booleana ';' '}'
+
+    '{'  shift, and go to state 52
+
+
+State 40
+
+   10 parametros: tipo TK_ID •
+   11           | tipo TK_ID • ',' parametrosAux
+
+    ','  shift, and go to state 53
+
+    $default  reduce using rule 10 (parametros)
+
+
+State 41
+
+   14 main: TK_MAIN '(' ')' '{' • comandos '}'
+
+    TK_INT     shift, and go to state 16
+    TK_FLOAT   shift, and go to state 17
+    TK_CHAR    shift, and go to state 18
+    TK_STRING  shift, and go to state 19
+    TK_ARRAY   shift, and go to state 20
+    TK_IF      shift, and go to state 54
+    TK_WHILE   shift, and go to state 55
+    TK_PRINT   shift, and go to state 56
+    TK_SCAN    shift, and go to state 57
+    TK_ID      shift, and go to state 58
+
+    $default  reduce using rule 15 (comandos)
+
+    comandos               go to state 59
+    declaracao             go to state 60
+    atribuicao             go to state 61
+    tipo                   go to state 23
+    tipo_array             go to state 24
+    tipo_classe            go to state 25
+    expressao_condicional  go to state 62
+    expressao_repeticao    go to state 63
+    expressao_scan         go to state 64
+    expressao_print        go to state 65
+
+
+State 42
+
+   37 tipo_array: TK_ARRAY '<' tipo '>' •
+
+    $default  reduce using rule 37 (tipo_array)
+
+
+State 43
+
+   27 atribuicao: TK_ID '=' TK_NEW • TK_ID '(' ')' ';'
+
+    TK_ID  shift, and go to state 66
+
+
+State 44
+
+   49 fator: TK_NUMBER •
+
+    $default  reduce using rule 49 (fator)
+
+
+State 45
+
+   48 fator: TK_ID •
+
+    $default  reduce using rule 48 (fator)
+
+
+State 46
+
+   50 fator: TK_PALAVRA •
+
+    $default  reduce using rule 50 (fator)
+
+
+State 47
+
+   51 fator: '(' • expressao ')'
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    '('         shift, and go to state 47
+
+    expressao  go to state 67
+    termo      go to state 50
+    fator      go to state 51
+
+
+State 48
+
+   26 atribuicao: TK_ID '=' '[' • conteudo_array ']' ';'
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    '('         shift, and go to state 47
+
+    $default  reduce using rule 28 (conteudo_array)
+
+    conteudo_array  go to state 68
+    expressao       go to state 69
+    termo           go to state 50
+    fator           go to state 51
+
+
+State 49
+
+   25 atribuicao: TK_ID '=' expressao • ';'
+
+    ';'  shift, and go to state 70
+
+
+State 50
+
+   39 expressao: termo • expressaoAux
+
+    '+'  shift, and go to state 71
+    '-'  shift, and go to state 72
+
+    $default  reduce using rule 40 (expressaoAux)
+
+    expressaoAux  go to state 73
+
+
+State 51
+
+   43 termo: fator • termoAux
+
+    '*'  shift, and go to state 74
+    '/'  shift, and go to state 75
+    '%'  shift, and go to state 76
+
+    $default  reduce using rule 44 (termoAux)
+
+    termoAux  go to state 77
+
+
+State 52
+
+    5 funcao: TK_FUNC TK_ID '(' parametros ')' '{' • comandos TK_RETURN expressao ';' '}'
+    6       | TK_FUNC TK_ID '(' parametros ')' '{' • comandos TK_RETURN expressao_booleana ';' '}'
+
+    TK_INT     shift, and go to state 16
+    TK_FLOAT   shift, and go to state 17
+    TK_CHAR    shift, and go to state 18
+    TK_STRING  shift, and go to state 19
+    TK_ARRAY   shift, and go to state 20
+    TK_IF      shift, and go to state 54
+    TK_WHILE   shift, and go to state 55
+    TK_PRINT   shift, and go to state 56
+    TK_SCAN    shift, and go to state 57
+    TK_ID      shift, and go to state 58
+
+    $default  reduce using rule 15 (comandos)
+
+    comandos               go to state 78
+    declaracao             go to state 60
+    atribuicao             go to state 61
+    tipo                   go to state 23
+    tipo_array             go to state 24
+    tipo_classe            go to state 25
+    expressao_condicional  go to state 62
+    expressao_repeticao    go to state 63
+    expressao_scan         go to state 64
+    expressao_print        go to state 65
+
+
+State 53
+
+   11 parametros: tipo TK_ID ',' • parametrosAux
+
+    TK_INT     shift, and go to state 16
+    TK_FLOAT   shift, and go to state 17
+    TK_CHAR    shift, and go to state 18
+    TK_STRING  shift, and go to state 19
+
+    parametrosAux  go to state 79
+    tipo           go to state 80
+
+
+State 54
+
+   52 expressao_condicional: TK_IF • '(' expressao_booleana ')' '{' comandos '}'
+   53                      | TK_IF • '(' expressao_booleana ')' '{' comandos '}' TK_ELSE '{' comandos '}'
+
+    '('  shift, and go to state 81
+
+
+State 55
+
+   71 expressao_repeticao: TK_WHILE • '(' expressao_booleana ')' '{' comandos '}'
+
+    '('  shift, and go to state 82
+
+
+State 56
+
+   73 expressao_print: TK_PRINT • '(' expressao ')' ';'
+   74                | TK_PRINT • '(' expressao_booleana ')' ';'
+
+    '('  shift, and go to state 83
+
+
+State 57
+
+   72 expressao_scan: TK_SCAN • '(' TK_ID ')' ';'
+
+    '('  shift, and go to state 84
+
+
+State 58
+
+   25 atribuicao: TK_ID • '=' expressao ';'
+   26           | TK_ID • '=' '[' conteudo_array ']' ';'
+   27           | TK_ID • '=' TK_NEW TK_ID '(' ')' ';'
+   38 tipo_classe: TK_ID •
+
+    '='  shift, and go to state 38
+
+    $default  reduce using rule 38 (tipo_classe)
+
+
+State 59
+
+   14 main: TK_MAIN '(' ')' '{' comandos • '}'
+
+    '}'  shift, and go to state 85
+
+
+State 60
+
+   16 comandos: declaracao • comandos
+
+    TK_INT     shift, and go to state 16
+    TK_FLOAT   shift, and go to state 17
+    TK_CHAR    shift, and go to state 18
+    TK_STRING  shift, and go to state 19
+    TK_ARRAY   shift, and go to state 20
+    TK_IF      shift, and go to state 54
+    TK_WHILE   shift, and go to state 55
+    TK_PRINT   shift, and go to state 56
+    TK_SCAN    shift, and go to state 57
+    TK_ID      shift, and go to state 58
+
+    $default  reduce using rule 15 (comandos)
+
+    comandos               go to state 86
+    declaracao             go to state 60
+    atribuicao             go to state 61
+    tipo                   go to state 23
+    tipo_array             go to state 24
+    tipo_classe            go to state 25
+    expressao_condicional  go to state 62
+    expressao_repeticao    go to state 63
+    expressao_scan         go to state 64
+    expressao_print        go to state 65
+
+
+State 61
+
+   17 comandos: atribuicao • comandos
+
+    TK_INT     shift, and go to state 16
+    TK_FLOAT   shift, and go to state 17
+    TK_CHAR    shift, and go to state 18
+    TK_STRING  shift, and go to state 19
+    TK_ARRAY   shift, and go to state 20
+    TK_IF      shift, and go to state 54
+    TK_WHILE   shift, and go to state 55
+    TK_PRINT   shift, and go to state 56
+    TK_SCAN    shift, and go to state 57
+    TK_ID      shift, and go to state 58
+
+    $default  reduce using rule 15 (comandos)
+
+    comandos               go to state 87
+    declaracao             go to state 60
+    atribuicao             go to state 61
+    tipo                   go to state 23
+    tipo_array             go to state 24
+    tipo_classe            go to state 25
+    expressao_condicional  go to state 62
+    expressao_repeticao    go to state 63
+    expressao_scan         go to state 64
+    expressao_print        go to state 65
+
+
+State 62
+
+   18 comandos: expressao_condicional • comandos
+
+    TK_INT     shift, and go to state 16
+    TK_FLOAT   shift, and go to state 17
+    TK_CHAR    shift, and go to state 18
+    TK_STRING  shift, and go to state 19
+    TK_ARRAY   shift, and go to state 20
+    TK_IF      shift, and go to state 54
+    TK_WHILE   shift, and go to state 55
+    TK_PRINT   shift, and go to state 56
+    TK_SCAN    shift, and go to state 57
+    TK_ID      shift, and go to state 58
+
+    $default  reduce using rule 15 (comandos)
+
+    comandos               go to state 88
+    declaracao             go to state 60
+    atribuicao             go to state 61
+    tipo                   go to state 23
+    tipo_array             go to state 24
+    tipo_classe            go to state 25
+    expressao_condicional  go to state 62
+    expressao_repeticao    go to state 63
+    expressao_scan         go to state 64
+    expressao_print        go to state 65
+
+
+State 63
+
+   19 comandos: expressao_repeticao • comandos
+
+    TK_INT     shift, and go to state 16
+    TK_FLOAT   shift, and go to state 17
+    TK_CHAR    shift, and go to state 18
+    TK_STRING  shift, and go to state 19
+    TK_ARRAY   shift, and go to state 20
+    TK_IF      shift, and go to state 54
+    TK_WHILE   shift, and go to state 55
+    TK_PRINT   shift, and go to state 56
+    TK_SCAN    shift, and go to state 57
+    TK_ID      shift, and go to state 58
+
+    $default  reduce using rule 15 (comandos)
+
+    comandos               go to state 89
+    declaracao             go to state 60
+    atribuicao             go to state 61
+    tipo                   go to state 23
+    tipo_array             go to state 24
+    tipo_classe            go to state 25
+    expressao_condicional  go to state 62
+    expressao_repeticao    go to state 63
+    expressao_scan         go to state 64
+    expressao_print        go to state 65
+
+
+State 64
+
+   20 comandos: expressao_scan • comandos
+
+    TK_INT     shift, and go to state 16
+    TK_FLOAT   shift, and go to state 17
+    TK_CHAR    shift, and go to state 18
+    TK_STRING  shift, and go to state 19
+    TK_ARRAY   shift, and go to state 20
+    TK_IF      shift, and go to state 54
+    TK_WHILE   shift, and go to state 55
+    TK_PRINT   shift, and go to state 56
+    TK_SCAN    shift, and go to state 57
+    TK_ID      shift, and go to state 58
+
+    $default  reduce using rule 15 (comandos)
+
+    comandos               go to state 90
+    declaracao             go to state 60
+    atribuicao             go to state 61
+    tipo                   go to state 23
+    tipo_array             go to state 24
+    tipo_classe            go to state 25
+    expressao_condicional  go to state 62
+    expressao_repeticao    go to state 63
+    expressao_scan         go to state 64
+    expressao_print        go to state 65
+
+
+State 65
+
+   21 comandos: expressao_print • comandos
+
+    TK_INT     shift, and go to state 16
+    TK_FLOAT   shift, and go to state 17
+    TK_CHAR    shift, and go to state 18
+    TK_STRING  shift, and go to state 19
+    TK_ARRAY   shift, and go to state 20
+    TK_IF      shift, and go to state 54
+    TK_WHILE   shift, and go to state 55
+    TK_PRINT   shift, and go to state 56
+    TK_SCAN    shift, and go to state 57
+    TK_ID      shift, and go to state 58
+
+    $default  reduce using rule 15 (comandos)
+
+    comandos               go to state 91
+    declaracao             go to state 60
+    atribuicao             go to state 61
+    tipo                   go to state 23
+    tipo_array             go to state 24
+    tipo_classe            go to state 25
+    expressao_condicional  go to state 62
+    expressao_repeticao    go to state 63
+    expressao_scan         go to state 64
+    expressao_print        go to state 65
+
+
+State 66
+
+   27 atribuicao: TK_ID '=' TK_NEW TK_ID • '(' ')' ';'
+
+    '('  shift, and go to state 92
+
+
+State 67
+
+   51 fator: '(' expressao • ')'
+
+    ')'  shift, and go to state 93
+
+
+State 68
+
+   26 atribuicao: TK_ID '=' '[' conteudo_array • ']' ';'
+
+    ']'  shift, and go to state 94
+
+
+State 69
+
+   29 conteudo_array: expressao •
+   30               | expressao • ',' conteudo_arrayAux
+
+    ','  shift, and go to state 95
+
+    $default  reduce using rule 29 (conteudo_array)
+
+
+State 70
+
+   25 atribuicao: TK_ID '=' expressao ';' •
+
+    $default  reduce using rule 25 (atribuicao)
+
+
+State 71
+
+   42 expressaoAux: '+' • termo expressaoAux
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    '('         shift, and go to state 47
+
+    termo  go to state 96
+    fator  go to state 51
+
+
+State 72
+
+   41 expressaoAux: '-' • termo expressaoAux
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    '('         shift, and go to state 47
+
+    termo  go to state 97
+    fator  go to state 51
+
+
+State 73
+
+   39 expressao: termo expressaoAux •
+
+    $default  reduce using rule 39 (expressao)
+
+
+State 74
+
+   45 termoAux: '*' • fator termoAux
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    '('         shift, and go to state 47
+
+    fator  go to state 98
+
+
+State 75
+
+   46 termoAux: '/' • fator termoAux
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    '('         shift, and go to state 47
+
+    fator  go to state 99
+
+
+State 76
+
+   47 termoAux: '%' • fator termoAux
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    '('         shift, and go to state 47
+
+    fator  go to state 100
+
+
+State 77
+
+   43 termo: fator termoAux •
+
+    $default  reduce using rule 43 (termo)
+
+
+State 78
+
+    5 funcao: TK_FUNC TK_ID '(' parametros ')' '{' comandos • TK_RETURN expressao ';' '}'
+    6       | TK_FUNC TK_ID '(' parametros ')' '{' comandos • TK_RETURN expressao_booleana ';' '}'
+
+    TK_RETURN  shift, and go to state 101
+
+
+State 79
+
+   11 parametros: tipo TK_ID ',' parametrosAux •
+
+    $default  reduce using rule 11 (parametros)
+
+
+State 80
+
+   12 parametrosAux: tipo • TK_ID
+   13              | tipo • TK_ID ',' parametrosAux
+
+    TK_ID  shift, and go to state 102
+
+
+State 81
+
+   52 expressao_condicional: TK_IF '(' • expressao_booleana ')' '{' comandos '}'
+   53                      | TK_IF '(' • expressao_booleana ')' '{' comandos '}' TK_ELSE '{' comandos '}'
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    TK_NOT      shift, and go to state 103
+    '('         shift, and go to state 104
+
+    expressao           go to state 105
+    termo               go to state 50
+    fator               go to state 51
+    expressao_booleana  go to state 106
+    termo_booleano      go to state 107
+    fator_booleano      go to state 108
+    comparacao          go to state 109
+
+
+State 82
+
+   71 expressao_repeticao: TK_WHILE '(' • expressao_booleana ')' '{' comandos '}'
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    TK_NOT      shift, and go to state 103
+    '('         shift, and go to state 104
+
+    expressao           go to state 105
+    termo               go to state 50
+    fator               go to state 51
+    expressao_booleana  go to state 110
+    termo_booleano      go to state 107
+    fator_booleano      go to state 108
+    comparacao          go to state 109
+
+
+State 83
+
+   73 expressao_print: TK_PRINT '(' • expressao ')' ';'
+   74                | TK_PRINT '(' • expressao_booleana ')' ';'
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    TK_NOT      shift, and go to state 103
+    '('         shift, and go to state 104
+
+    expressao           go to state 111
+    termo               go to state 50
+    fator               go to state 51
+    expressao_booleana  go to state 112
+    termo_booleano      go to state 107
+    fator_booleano      go to state 108
+    comparacao          go to state 109
+
+
+State 84
+
+   72 expressao_scan: TK_SCAN '(' • TK_ID ')' ';'
+
+    TK_ID  shift, and go to state 113
+
+
+State 85
+
+   14 main: TK_MAIN '(' ')' '{' comandos '}' •
+
+    $default  reduce using rule 14 (main)
+
+
+State 86
+
+   16 comandos: declaracao comandos •
+
+    $default  reduce using rule 16 (comandos)
+
+
+State 87
+
+   17 comandos: atribuicao comandos •
+
+    $default  reduce using rule 17 (comandos)
+
+
+State 88
+
+   18 comandos: expressao_condicional comandos •
+
+    $default  reduce using rule 18 (comandos)
+
+
+State 89
+
+   19 comandos: expressao_repeticao comandos •
+
+    $default  reduce using rule 19 (comandos)
+
+
+State 90
+
+   20 comandos: expressao_scan comandos •
+
+    $default  reduce using rule 20 (comandos)
+
+
+State 91
+
+   21 comandos: expressao_print comandos •
+
+    $default  reduce using rule 21 (comandos)
+
+
+State 92
+
+   27 atribuicao: TK_ID '=' TK_NEW TK_ID '(' • ')' ';'
+
+    ')'  shift, and go to state 114
+
+
+State 93
+
+   51 fator: '(' expressao ')' •
+
+    $default  reduce using rule 51 (fator)
+
+
+State 94
+
+   26 atribuicao: TK_ID '=' '[' conteudo_array ']' • ';'
+
+    ';'  shift, and go to state 115
+
+
+State 95
+
+   30 conteudo_array: expressao ',' • conteudo_arrayAux
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    '('         shift, and go to state 47
+
+    conteudo_arrayAux  go to state 116
+    expressao          go to state 117
+    termo              go to state 50
+    fator              go to state 51
+
+
+State 96
+
+   42 expressaoAux: '+' termo • expressaoAux
+
+    '+'  shift, and go to state 71
+    '-'  shift, and go to state 72
+
+    $default  reduce using rule 40 (expressaoAux)
+
+    expressaoAux  go to state 118
+
+
+State 97
+
+   41 expressaoAux: '-' termo • expressaoAux
+
+    '+'  shift, and go to state 71
+    '-'  shift, and go to state 72
+
+    $default  reduce using rule 40 (expressaoAux)
+
+    expressaoAux  go to state 119
+
+
+State 98
+
+   45 termoAux: '*' fator • termoAux
+
+    '*'  shift, and go to state 74
+    '/'  shift, and go to state 75
+    '%'  shift, and go to state 76
+
+    $default  reduce using rule 44 (termoAux)
+
+    termoAux  go to state 120
+
+
+State 99
+
+   46 termoAux: '/' fator • termoAux
+
+    '*'  shift, and go to state 74
+    '/'  shift, and go to state 75
+    '%'  shift, and go to state 76
+
+    $default  reduce using rule 44 (termoAux)
+
+    termoAux  go to state 121
+
+
+State 100
+
+   47 termoAux: '%' fator • termoAux
+
+    '*'  shift, and go to state 74
+    '/'  shift, and go to state 75
+    '%'  shift, and go to state 76
+
+    $default  reduce using rule 44 (termoAux)
+
+    termoAux  go to state 122
+
+
+State 101
+
+    5 funcao: TK_FUNC TK_ID '(' parametros ')' '{' comandos TK_RETURN • expressao ';' '}'
+    6       | TK_FUNC TK_ID '(' parametros ')' '{' comandos TK_RETURN • expressao_booleana ';' '}'
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    TK_NOT      shift, and go to state 103
+    '('         shift, and go to state 104
+
+    expressao           go to state 123
+    termo               go to state 50
+    fator               go to state 51
+    expressao_booleana  go to state 124
+    termo_booleano      go to state 107
+    fator_booleano      go to state 108
+    comparacao          go to state 109
+
+
+State 102
+
+   12 parametrosAux: tipo TK_ID •
+   13              | tipo TK_ID • ',' parametrosAux
+
+    ','  shift, and go to state 125
+
+    $default  reduce using rule 12 (parametrosAux)
+
+
+State 103
+
+   60 fator_booleano: TK_NOT • comparacao
+   62               | TK_NOT • '(' expressao_booleana ')'
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    '('         shift, and go to state 126
+
+    expressao   go to state 105
+    termo       go to state 50
+    fator       go to state 51
+    comparacao  go to state 127
+
+
+State 104
+
+   51 fator: '(' • expressao ')'
+   63 fator_booleano: '(' • expressao_booleana ')'
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    TK_NOT      shift, and go to state 103
+    '('         shift, and go to state 104
+
+    expressao           go to state 128
+    termo               go to state 50
+    fator               go to state 51
+    expressao_booleana  go to state 129
+    termo_booleano      go to state 107
+    fator_booleano      go to state 108
+    comparacao          go to state 109
+
+
+State 105
+
+   64 comparacao: expressao • op_logico expressao
+
+    '<'    shift, and go to state 130
+    '>'    shift, and go to state 131
+    TK_NE  shift, and go to state 132
+    TK_LE  shift, and go to state 133
+    TK_GE  shift, and go to state 134
+    TK_EQ  shift, and go to state 135
+
+    op_logico  go to state 136
+
+
+State 106
+
+   52 expressao_condicional: TK_IF '(' expressao_booleana • ')' '{' comandos '}'
+   53                      | TK_IF '(' expressao_booleana • ')' '{' comandos '}' TK_ELSE '{' comandos '}'
+
+    ')'  shift, and go to state 137
+
+
+State 107
+
+   54 expressao_booleana: termo_booleano • expressao_booleanaAux
+
+    TK_OR  shift, and go to state 138
+
+    $default  reduce using rule 55 (expressao_booleanaAux)
+
+    expressao_booleanaAux  go to state 139
+
+
+State 108
+
+   57 termo_booleano: fator_booleano • termo_booleanoAux
+
+    TK_AND  shift, and go to state 140
+
+    $default  reduce using rule 58 (termo_booleanoAux)
+
+    termo_booleanoAux  go to state 141
+
+
+State 109
+
+   61 fator_booleano: comparacao •
+
+    $default  reduce using rule 61 (fator_booleano)
+
+
+State 110
+
+   71 expressao_repeticao: TK_WHILE '(' expressao_booleana • ')' '{' comandos '}'
+
+    ')'  shift, and go to state 142
+
+
+State 111
+
+   64 comparacao: expressao • op_logico expressao
+   73 expressao_print: TK_PRINT '(' expressao • ')' ';'
+
+    '<'    shift, and go to state 130
+    '>'    shift, and go to state 131
+    TK_NE  shift, and go to state 132
+    TK_LE  shift, and go to state 133
+    TK_GE  shift, and go to state 134
+    TK_EQ  shift, and go to state 135
+    ')'    shift, and go to state 143
+
+    op_logico  go to state 136
+
+
+State 112
+
+   74 expressao_print: TK_PRINT '(' expressao_booleana • ')' ';'
+
+    ')'  shift, and go to state 144
+
+
+State 113
+
+   72 expressao_scan: TK_SCAN '(' TK_ID • ')' ';'
+
+    ')'  shift, and go to state 145
+
+
+State 114
+
+   27 atribuicao: TK_ID '=' TK_NEW TK_ID '(' ')' • ';'
+
+    ';'  shift, and go to state 146
+
+
+State 115
+
+   26 atribuicao: TK_ID '=' '[' conteudo_array ']' ';' •
+
+    $default  reduce using rule 26 (atribuicao)
+
+
+State 116
+
+   30 conteudo_array: expressao ',' conteudo_arrayAux •
+
+    $default  reduce using rule 30 (conteudo_array)
+
+
+State 117
+
+   31 conteudo_arrayAux: expressao •
+   32                  | expressao • ',' conteudo_arrayAux
+
+    ','  shift, and go to state 147
+
+    $default  reduce using rule 31 (conteudo_arrayAux)
+
+
+State 118
+
+   42 expressaoAux: '+' termo expressaoAux •
+
+    $default  reduce using rule 42 (expressaoAux)
+
+
+State 119
+
+   41 expressaoAux: '-' termo expressaoAux •
+
+    $default  reduce using rule 41 (expressaoAux)
+
+
+State 120
+
+   45 termoAux: '*' fator termoAux •
+
+    $default  reduce using rule 45 (termoAux)
+
+
+State 121
+
+   46 termoAux: '/' fator termoAux •
+
+    $default  reduce using rule 46 (termoAux)
+
+
+State 122
+
+   47 termoAux: '%' fator termoAux •
+
+    $default  reduce using rule 47 (termoAux)
+
+
+State 123
+
+    5 funcao: TK_FUNC TK_ID '(' parametros ')' '{' comandos TK_RETURN expressao • ';' '}'
+   64 comparacao: expressao • op_logico expressao
+
+    '<'    shift, and go to state 130
+    '>'    shift, and go to state 131
+    TK_NE  shift, and go to state 132
+    TK_LE  shift, and go to state 133
+    TK_GE  shift, and go to state 134
+    TK_EQ  shift, and go to state 135
+    ';'    shift, and go to state 148
+
+    op_logico  go to state 136
+
+
+State 124
+
+    6 funcao: TK_FUNC TK_ID '(' parametros ')' '{' comandos TK_RETURN expressao_booleana • ';' '}'
+
+    ';'  shift, and go to state 149
+
+
+State 125
+
+   13 parametrosAux: tipo TK_ID ',' • parametrosAux
+
+    TK_INT     shift, and go to state 16
+    TK_FLOAT   shift, and go to state 17
+    TK_CHAR    shift, and go to state 18
+    TK_STRING  shift, and go to state 19
+
+    parametrosAux  go to state 150
+    tipo           go to state 80
+
+
+State 126
+
+   51 fator: '(' • expressao ')'
+   62 fator_booleano: TK_NOT '(' • expressao_booleana ')'
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    TK_NOT      shift, and go to state 103
+    '('         shift, and go to state 104
+
+    expressao           go to state 128
+    termo               go to state 50
+    fator               go to state 51
+    expressao_booleana  go to state 151
+    termo_booleano      go to state 107
+    fator_booleano      go to state 108
+    comparacao          go to state 109
+
+
+State 127
+
+   60 fator_booleano: TK_NOT comparacao •
+
+    $default  reduce using rule 60 (fator_booleano)
+
+
+State 128
+
+   51 fator: '(' expressao • ')'
+   64 comparacao: expressao • op_logico expressao
+
+    '<'    shift, and go to state 130
+    '>'    shift, and go to state 131
+    TK_NE  shift, and go to state 132
+    TK_LE  shift, and go to state 133
+    TK_GE  shift, and go to state 134
+    TK_EQ  shift, and go to state 135
+    ')'    shift, and go to state 93
+
+    op_logico  go to state 136
+
+
+State 129
+
+   63 fator_booleano: '(' expressao_booleana • ')'
+
+    ')'  shift, and go to state 152
+
+
+State 130
+
+   65 op_logico: '<' •
+
+    $default  reduce using rule 65 (op_logico)
+
+
+State 131
+
+   66 op_logico: '>' •
+
+    $default  reduce using rule 66 (op_logico)
+
+
+State 132
+
+   67 op_logico: TK_NE •
+
+    $default  reduce using rule 67 (op_logico)
+
+
+State 133
+
+   68 op_logico: TK_LE •
+
+    $default  reduce using rule 68 (op_logico)
+
+
+State 134
+
+   69 op_logico: TK_GE •
+
+    $default  reduce using rule 69 (op_logico)
+
+
+State 135
+
+   70 op_logico: TK_EQ •
+
+    $default  reduce using rule 70 (op_logico)
+
+
+State 136
+
+   64 comparacao: expressao op_logico • expressao
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    '('         shift, and go to state 47
+
+    expressao  go to state 153
+    termo      go to state 50
+    fator      go to state 51
+
+
+State 137
+
+   52 expressao_condicional: TK_IF '(' expressao_booleana ')' • '{' comandos '}'
+   53                      | TK_IF '(' expressao_booleana ')' • '{' comandos '}' TK_ELSE '{' comandos '}'
+
+    '{'  shift, and go to state 154
+
+
+State 138
+
+   56 expressao_booleanaAux: TK_OR • termo_booleano expressao_booleanaAux
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    TK_NOT      shift, and go to state 103
+    '('         shift, and go to state 104
+
+    expressao       go to state 105
+    termo           go to state 50
+    fator           go to state 51
+    termo_booleano  go to state 155
+    fator_booleano  go to state 108
+    comparacao      go to state 109
+
+
+State 139
+
+   54 expressao_booleana: termo_booleano expressao_booleanaAux •
+
+    $default  reduce using rule 54 (expressao_booleana)
+
+
+State 140
+
+   59 termo_booleanoAux: TK_AND • fator_booleano termo_booleanoAux
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    TK_NOT      shift, and go to state 103
+    '('         shift, and go to state 104
+
+    expressao       go to state 105
+    termo           go to state 50
+    fator           go to state 51
+    fator_booleano  go to state 156
+    comparacao      go to state 109
+
+
+State 141
+
+   57 termo_booleano: fator_booleano termo_booleanoAux •
+
+    $default  reduce using rule 57 (termo_booleano)
+
+
+State 142
+
+   71 expressao_repeticao: TK_WHILE '(' expressao_booleana ')' • '{' comandos '}'
+
+    '{'  shift, and go to state 157
+
+
+State 143
+
+   73 expressao_print: TK_PRINT '(' expressao ')' • ';'
+
+    ';'  shift, and go to state 158
+
+
+State 144
+
+   74 expressao_print: TK_PRINT '(' expressao_booleana ')' • ';'
+
+    ';'  shift, and go to state 159
+
+
+State 145
+
+   72 expressao_scan: TK_SCAN '(' TK_ID ')' • ';'
+
+    ';'  shift, and go to state 160
+
+
+State 146
+
+   27 atribuicao: TK_ID '=' TK_NEW TK_ID '(' ')' ';' •
+
+    $default  reduce using rule 27 (atribuicao)
+
+
+State 147
+
+   32 conteudo_arrayAux: expressao ',' • conteudo_arrayAux
+
+    TK_NUMBER   shift, and go to state 44
+    TK_ID       shift, and go to state 45
+    TK_PALAVRA  shift, and go to state 46
+    '('         shift, and go to state 47
+
+    conteudo_arrayAux  go to state 161
+    expressao          go to state 117
+    termo              go to state 50
+    fator              go to state 51
+
+
+State 148
+
+    5 funcao: TK_FUNC TK_ID '(' parametros ')' '{' comandos TK_RETURN expressao ';' • '}'
+
+    '}'  shift, and go to state 162
+
+
+State 149
+
+    6 funcao: TK_FUNC TK_ID '(' parametros ')' '{' comandos TK_RETURN expressao_booleana ';' • '}'
+
+    '}'  shift, and go to state 163
+
+
+State 150
+
+   13 parametrosAux: tipo TK_ID ',' parametrosAux •
+
+    $default  reduce using rule 13 (parametrosAux)
+
+
+State 151
+
+   62 fator_booleano: TK_NOT '(' expressao_booleana • ')'
+
+    ')'  shift, and go to state 164
+
+
+State 152
+
+   63 fator_booleano: '(' expressao_booleana ')' •
+
+    $default  reduce using rule 63 (fator_booleano)
+
+
+State 153
+
+   64 comparacao: expressao op_logico expressao •
+
+    $default  reduce using rule 64 (comparacao)
+
+
+State 154
+
+   52 expressao_condicional: TK_IF '(' expressao_booleana ')' '{' • comandos '}'
+   53                      | TK_IF '(' expressao_booleana ')' '{' • comandos '}' TK_ELSE '{' comandos '}'
+
+    TK_INT     shift, and go to state 16
+    TK_FLOAT   shift, and go to state 17
+    TK_CHAR    shift, and go to state 18
+    TK_STRING  shift, and go to state 19
+    TK_ARRAY   shift, and go to state 20
+    TK_IF      shift, and go to state 54
+    TK_WHILE   shift, and go to state 55
+    TK_PRINT   shift, and go to state 56
+    TK_SCAN    shift, and go to state 57
+    TK_ID      shift, and go to state 58
+
+    $default  reduce using rule 15 (comandos)
+
+    comandos               go to state 165
+    declaracao             go to state 60
+    atribuicao             go to state 61
+    tipo                   go to state 23
+    tipo_array             go to state 24
+    tipo_classe            go to state 25
+    expressao_condicional  go to state 62
+    expressao_repeticao    go to state 63
+    expressao_scan         go to state 64
+    expressao_print        go to state 65
+
+
+State 155
+
+   56 expressao_booleanaAux: TK_OR termo_booleano • expressao_booleanaAux
+
+    TK_OR  shift, and go to state 138
+
+    $default  reduce using rule 55 (expressao_booleanaAux)
+
+    expressao_booleanaAux  go to state 166
+
+
+State 156
+
+   59 termo_booleanoAux: TK_AND fator_booleano • termo_booleanoAux
+
+    TK_AND  shift, and go to state 140
+
+    $default  reduce using rule 58 (termo_booleanoAux)
+
+    termo_booleanoAux  go to state 167
+
+
+State 157
+
+   71 expressao_repeticao: TK_WHILE '(' expressao_booleana ')' '{' • comandos '}'
+
+    TK_INT     shift, and go to state 16
+    TK_FLOAT   shift, and go to state 17
+    TK_CHAR    shift, and go to state 18
+    TK_STRING  shift, and go to state 19
+    TK_ARRAY   shift, and go to state 20
+    TK_IF      shift, and go to state 54
+    TK_WHILE   shift, and go to state 55
+    TK_PRINT   shift, and go to state 56
+    TK_SCAN    shift, and go to state 57
+    TK_ID      shift, and go to state 58
+
+    $default  reduce using rule 15 (comandos)
+
+    comandos               go to state 168
+    declaracao             go to state 60
+    atribuicao             go to state 61
+    tipo                   go to state 23
+    tipo_array             go to state 24
+    tipo_classe            go to state 25
+    expressao_condicional  go to state 62
+    expressao_repeticao    go to state 63
+    expressao_scan         go to state 64
+    expressao_print        go to state 65
+
+
+State 158
+
+   73 expressao_print: TK_PRINT '(' expressao ')' ';' •
+
+    $default  reduce using rule 73 (expressao_print)
+
+
+State 159
+
+   74 expressao_print: TK_PRINT '(' expressao_booleana ')' ';' •
+
+    $default  reduce using rule 74 (expressao_print)
+
+
+State 160
+
+   72 expressao_scan: TK_SCAN '(' TK_ID ')' ';' •
+
+    $default  reduce using rule 72 (expressao_scan)
+
+
+State 161
+
+   32 conteudo_arrayAux: expressao ',' conteudo_arrayAux •
+
+    $default  reduce using rule 32 (conteudo_arrayAux)
+
+
+State 162
+
+    5 funcao: TK_FUNC TK_ID '(' parametros ')' '{' comandos TK_RETURN expressao ';' '}' •
+
+    $default  reduce using rule 5 (funcao)
+
+
+State 163
+
+    6 funcao: TK_FUNC TK_ID '(' parametros ')' '{' comandos TK_RETURN expressao_booleana ';' '}' •
+
+    $default  reduce using rule 6 (funcao)
+
+
+State 164
+
+   62 fator_booleano: TK_NOT '(' expressao_booleana ')' •
+
+    $default  reduce using rule 62 (fator_booleano)
+
+
+State 165
+
+   52 expressao_condicional: TK_IF '(' expressao_booleana ')' '{' comandos • '}'
+   53                      | TK_IF '(' expressao_booleana ')' '{' comandos • '}' TK_ELSE '{' comandos '}'
+
+    '}'  shift, and go to state 169
+
+
+State 166
+
+   56 expressao_booleanaAux: TK_OR termo_booleano expressao_booleanaAux •
+
+    $default  reduce using rule 56 (expressao_booleanaAux)
+
+
+State 167
+
+   59 termo_booleanoAux: TK_AND fator_booleano termo_booleanoAux •
+
+    $default  reduce using rule 59 (termo_booleanoAux)
+
+
+State 168
+
+   71 expressao_repeticao: TK_WHILE '(' expressao_booleana ')' '{' comandos • '}'
+
+    '}'  shift, and go to state 170
+
+
+State 169
+
+   52 expressao_condicional: TK_IF '(' expressao_booleana ')' '{' comandos '}' •
+   53                      | TK_IF '(' expressao_booleana ')' '{' comandos '}' • TK_ELSE '{' comandos '}'
+
+    TK_ELSE  shift, and go to state 171
+
+    $default  reduce using rule 52 (expressao_condicional)
+
+
+State 170
+
+   71 expressao_repeticao: TK_WHILE '(' expressao_booleana ')' '{' comandos '}' •
+
+    $default  reduce using rule 71 (expressao_repeticao)
+
+
+State 171
+
+   53 expressao_condicional: TK_IF '(' expressao_booleana ')' '{' comandos '}' TK_ELSE • '{' comandos '}'
+
+    '{'  shift, and go to state 172
+
+
+State 172
+
+   53 expressao_condicional: TK_IF '(' expressao_booleana ')' '{' comandos '}' TK_ELSE '{' • comandos '}'
+
+    TK_INT     shift, and go to state 16
+    TK_FLOAT   shift, and go to state 17
+    TK_CHAR    shift, and go to state 18
+    TK_STRING  shift, and go to state 19
+    TK_ARRAY   shift, and go to state 20
+    TK_IF      shift, and go to state 54
+    TK_WHILE   shift, and go to state 55
+    TK_PRINT   shift, and go to state 56
+    TK_SCAN    shift, and go to state 57
+    TK_ID      shift, and go to state 58
+
+    $default  reduce using rule 15 (comandos)
+
+    comandos               go to state 173
+    declaracao             go to state 60
+    atribuicao             go to state 61
+    tipo                   go to state 23
+    tipo_array             go to state 24
+    tipo_classe            go to state 25
+    expressao_condicional  go to state 62
+    expressao_repeticao    go to state 63
+    expressao_scan         go to state 64
+    expressao_print        go to state 65
+
+
+State 173
+
+   53 expressao_condicional: TK_IF '(' expressao_booleana ')' '{' comandos '}' TK_ELSE '{' comandos • '}'
+
+    '}'  shift, and go to state 174
+
+
+State 174
+
+   53 expressao_condicional: TK_IF '(' expressao_booleana ')' '{' comandos '}' TK_ELSE '{' comandos '}' •
+
+    $default  reduce using rule 53 (expressao_condicional)
