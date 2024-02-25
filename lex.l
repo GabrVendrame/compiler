@@ -2,23 +2,6 @@
 %{
     #include <stdio.h>
     #include "sintax.tab.h"
-    // #define TK_INT 260
-    // #define TK_FLOAT 261
-    // #define TK_CHAR 262
-    // #define TK_STRING 263
-    // #define TK_CLASS 264
-    // #define TK_MAIN 265
-    // #define TK_IF 266
-    // #define TK_ELSE 267
-    // #define TK_WHILE 268
-    // #define TK_PRINT 269
-    // #define TK_SCAN 270
-    // #define TK_ID 271
-    // #define TK_NUMBER 272
-    // #define TK_NE 273
-    // #define TK_LE 274
-    // #define TK_GE 275
-    // #define TK_EQ 276
 %}
 
 
