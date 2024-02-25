@@ -15,15 +15,15 @@ extern FILE *yyin;
 %token TK_IF TK_ELSE TK_WHILE
 %token TK_PRINT TK_SCAN
 %token TK_NUMBER TK_ID TK_PALAVRA
-%token '<' '>' TK_NE TK_LE TK_GE TK_EQ TK_OR TK_AND TK_NOT
-%token '+' '-' '*' '/' '=' '|'
-%token '.' ',' ';' ':' '\"'
-%token '(' ')' '[' ']' '{' '}'
+%token TK_LESS TK_GREATER TK_NE TK_LE TK_GE TK_EQ TK_OR TK_AND TK_NOT
+%token TK_PLUS TK_MINUS TK_TIMES TK_SLASH TK_ATRIB TK_MODULE
+%token '.' TK_COMMA TK_SEMICOLON ':' '\"'
+%token TK_LPAR TK_RPAR TK_LBRACKET TK_RBRACKET TK_LBRACE TK_RBRACE
 
-%left '+' '-'
-%left '*' '/'
-%right '='
-%nonassoc '>' '<' TK_NE TK_LE TK_GE TK_EQ TK_OR TK_AND TK_NOT
+%left TK_PLUS TK_MINUS
+%left TK_TIMES TK_SLASH
+%right TK_ATRIB
+%nonassoc TK_GREATER TK_LESS TK_NE TK_LE TK_GE TK_EQ TK_OR TK_AND TK_NOT
 
 %%
 
@@ -32,7 +32,7 @@ program
     ;
 
 classe
-    : TK_CLASS TK_ID '{' declaracao '}'
+    : TK_CLASS TK_ID TK_LBRACE declaracao TK_RBRACE
 
 classes
     :
@@ -40,8 +40,8 @@ classes
     ;
 
 funcao
-    : TK_FUNC TK_ID '(' parametros ')' '{' comandos TK_RETURN expressao ';' '}'
-    | TK_FUNC TK_ID '(' parametros ')' '{' comandos TK_RETURN expressao_booleana ';' '}'
+    : TK_FUNC TK_ID TK_LPAR parametros TK_RPAR TK_LBRACE comandos TK_RETURN expressao TK_SEMICOLON TK_RBRACE
+    | TK_FUNC TK_ID TK_LPAR parametros TK_RPAR TK_LBRACE comandos TK_RETURN expressao_booleana TK_SEMICOLON TK_RBRACE
     ;
 
 funcoes
@@ -52,16 +52,16 @@ funcoes
 parametros
     :
     | tipo TK_ID
-    | tipo TK_ID ',' parametrosAux
+    | tipo TK_ID TK_COMMA parametrosAux
     ;
 
 parametrosAux
     : tipo TK_ID
-    | tipo TK_ID ',' parametrosAux
+    | tipo TK_ID TK_COMMA parametrosAux
     ;
 
 main
-    : TK_MAIN '(' ')' '{' comandos '}'
+    : TK_MAIN TK_LPAR TK_RPAR TK_LBRACE comandos TK_RBRACE
     ;
 
 comandos
@@ -81,20 +81,20 @@ declaracao
     ;
 
 atribuicao
-    : TK_ID '=' expressao ';'
-    | TK_ID '=' '[' conteudo_array ']' ';'
-    | TK_ID '=' TK_NEW TK_ID '(' ')' ';'
+    : TK_ID TK_ATRIB expressao TK_SEMICOLON
+    | TK_ID TK_ATRIB TK_LBRACKET conteudo_array TK_RBRACKET TK_SEMICOLON
+    | TK_ID TK_ATRIB TK_NEW TK_ID TK_LPAR TK_RPAR TK_SEMICOLON
     ;
 
 conteudo_array
     :
     | expressao
-    | expressao ',' conteudo_arrayAux
+    | expressao TK_COMMA conteudo_arrayAux
     ;
 
 conteudo_arrayAux
     : expressao
-    | expressao ',' conteudo_arrayAux
+    | expressao TK_COMMA conteudo_arrayAux
     ;
 
 tipo
@@ -105,7 +105,7 @@ tipo
     ;
 
 tipo_array
-    : TK_ARRAY '<' tipo '>'
+    : TK_ARRAY TK_LESS tipo TK_GREATER
     ;
 
 tipo_classe
@@ -118,8 +118,8 @@ expressao
 
 expressaoAux
     :
-    | '-' termo expressaoAux
-    | '+' termo expressaoAux
+    | TK_MINUS termo expressaoAux
+    | TK_PLUS termo expressaoAux
     ;
 
 termo
@@ -128,21 +128,21 @@ termo
 
 termoAux
     :
-    | '*' fator termoAux
-    | '/' fator termoAux
-    | '%' fator termoAux
+    | TK_TIMES fator termoAux
+    | TK_SLASH fator termoAux
+    | TK_MODULE fator termoAux
     ;
 
 fator
     : TK_ID
     | TK_NUMBER
     | TK_PALAVRA
-    | '(' expressao ')'
+    | TK_LPAR expressao TK_RPAR
     ;
 
 expressao_condicional
-    : TK_IF '(' expressao_booleana ')' '{' comandos '}'
-    | TK_IF '(' expressao_booleana ')' '{' comandos '}' TK_ELSE '{' comandos '}'
+    : TK_IF TK_LPAR expressao_booleana TK_RPAR TK_LBRACE comandos TK_RBRACE
+    | TK_IF TK_LPAR expressao_booleana TK_RPAR TK_LBRACE comandos TK_RBRACE TK_ELSE TK_LBRACE comandos TK_RBRACE
     ;
 
 expressao_booleana
@@ -166,8 +166,8 @@ termo_booleanoAux
 fator_booleano
     : TK_NOT comparacao
     | comparacao
-    | TK_NOT '(' expressao_booleana ')'
-    | '(' expressao_booleana ')'
+    | TK_NOT TK_LPAR expressao_booleana TK_RPAR
+    | TK_LPAR expressao_booleana TK_RPAR
     ;
 
 comparacao
@@ -175,8 +175,8 @@ comparacao
     ;
 
 op_logico
-    : '<'
-    | '>'
+    : TK_LESS
+    | TK_GREATER
     | TK_NE
     | TK_LE
     | TK_GE
@@ -184,16 +184,16 @@ op_logico
     ;
 
 expressao_repeticao
-    : TK_WHILE '(' expressao_booleana ')' '{' comandos '}'
+    : TK_WHILE TK_LPAR expressao_booleana TK_RPAR TK_LBRACE comandos TK_RBRACE
     ;
 
 expressao_scan
-    : TK_SCAN '(' TK_ID ')' ';'
+    : TK_SCAN TK_LPAR TK_ID TK_RPAR TK_SEMICOLON
     ;
 
 expressao_print
-    : TK_PRINT '(' expressao ')' ';'
-    | TK_PRINT '(' expressao_booleana ')' ';'
+    : TK_PRINT TK_LPAR expressao TK_RPAR TK_SEMICOLON
+    | TK_PRINT TK_LPAR expressao_booleana TK_RPAR TK_SEMICOLON
     ;
 
 %%

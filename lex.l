@@ -25,27 +25,23 @@
 "ler" { printf("%s\n", yytext); return TK_SCAN; }
 
 
-"+"	|
-"-" |
-"*"	|
-"/"	|
-"%" |
-"="	|
-"|"	|
-","	|
-";"	|
-["] |
-"." |
-":" |
-"["	|
-"]"	|
-"{"	|
-"}"	|
-"("	|
-")"	{ printf("%s\n", yytext); return yytext[0]; }
+"+" { printf("%s\n", yytext); return TK_PLUS; }
+"-" { printf("%s\n", yytext); return TK_MINUS; }
+"*"	{ printf("%s\n", yytext); return TK_TIMES; }
+"/"	{ printf("%s\n", yytext); return TK_SLASH; }
+"%" { printf("%s\n", yytext); return TK_MODULE; }
+"="	{ printf("%s\n", yytext); return TK_ATRIB; }
+","	{ printf("%s\n", yytext); return TK_COMMA; }
+";"	{ printf("%s\n", yytext); return TK_SEMICOLON; }
+"["	{ printf("%s\n", yytext); return TK_LBRACKET; }
+"]"	{ printf("%s\n", yytext); return TK_RBRACKET; }
+"{"	{ printf("%s\n", yytext); return TK_LBRACE; }
+"}"	{ printf("%s\n", yytext); return TK_RBRACE; }
+"("	{ printf("%s\n", yytext); return TK_LPAR; }
+")"	{ printf("%s\n", yytext); return TK_RPAR; }
 
-"<" { printf("%s\n", yytext); return '<'; }
-">" { printf("%s\n", yytext); return '>'; }
+"<" { printf("%s\n", yytext); return TK_LESS; }
+">" { printf("%s\n", yytext); return TK_GREATER; }
 "nao" { printf("%s\n", yytext); return TK_NOT; }
 "e" { printf("%s\n", yytext); return TK_AND; }
 "ou" { printf("%s\n", yytext); return TK_OR; }
