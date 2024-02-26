@@ -1,11 +1,12 @@
 *.exe
-
 *.out
+compiler
 
 *.yy.c
+*.tab.c
+*.tab.h
 
 output.txt
-classOutput.txt
 
 input.*
 

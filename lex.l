@@ -1,4 +1,5 @@
 %option noyywrap
+%option yylineno
 %{
     #include <stdio.h>
     #include "sintax.tab.h"
@@ -40,6 +41,10 @@
 "("	{ printf("%s\n", yytext); return TK_LPAR; }
 ")"	{ printf("%s\n", yytext); return TK_RPAR; }
 
+"." |
+":" |
+["] | { printf("%s\n", yytext); return yytext[0]; }
+
 "<" { printf("%s\n", yytext); return TK_LESS; }
 ">" { printf("%s\n", yytext); return TK_GREATER; }
 "nao" { printf("%s\n", yytext); return TK_NOT; }
@@ -55,8 +60,8 @@
 [0-9]+ { printf("%s\n", yytext); return TK_NUMBER; }
 [a-zA-Z_]?\"(\\.|[^\\"])*\" { printf("%s\n", yytext); return TK_PALAVRA; }
 
-"//".* { /*regex para ignorar comentarios*/ }
-[ \t\n\f\r]+ { /*regex para ignorar espacos em branco*/ }
-. { printf("Inválido\n"); }
+"//".* { /*ignorar comentarios*/ }
+[ \t\n\f\r]+ { /*ignorar espaços em branco*/ }
+. { printf("Caracter desconhecido\n"); }
 
 %%

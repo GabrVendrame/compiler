@@ -15,6 +15,9 @@ funcao fazAlgo2(inteiro x, real madrid){
 
 principal() {
     minhaClasse novaInstancia = novo minhaClasse();
+    inteiro teste = fazAlgo();
+    inteiro teste2 = fazAlgo2(teste, x);
+    teste = fazAlgo2("test", 10);
     inteiro x = 2;
     real madrid = 0;
     caracter c = "c";
