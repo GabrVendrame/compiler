@@ -2,11 +2,6 @@ void yyerror(const char *s);
 int yyparse();
 int yylex();
 
-union typeNumber{
-    int i;
-    float f;
-};
-
 struct arv {
     int tipo_no;
     struct arv *esq;
@@ -256,4 +251,4 @@ struct exp_rep *newExpRep(struct exp_bool *eb, struct comandos *c);
 struct exp_scan *newScan(char *id);
 struct exp_print *newPrint(int tipo_regra, struct expressao *e, struct exp_bool *eb);
 
-double eval(struct arv *arvore);
+double seman(struct arv *arvore);

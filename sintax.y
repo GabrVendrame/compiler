@@ -44,7 +44,8 @@ extern FILE *yyin;
     struct exp_scan *es;
     struct exp_print *print;
     char *str;
-    union typeNumber *tn;
+    int nint;
+    float nfloat;
 }
 
 %type<c> classe
@@ -85,7 +86,8 @@ extern FILE *yyin;
 %token TK_CLASS TK_MAIN TK_FUNC TK_RETURN TK_NEW
 %token TK_IF TK_ELSE TK_WHILE
 %token TK_PRINT TK_SCAN
-%token<tn> TK_NUMBER
+%token<nint> TK_NINT
+%token<nfloat> TK_NFLOAT
 %token<str> TK_PALAVRA
 %token<str> TK_ID
 %token TK_LESS TK_GREATER TK_NE TK_LE TK_GE TK_EQ TK_OR TK_AND TK_NOT
@@ -101,7 +103,7 @@ extern FILE *yyin;
 %%
 
 program
-    : classes funcoes main { }
+    : classes funcoes main { printf("Sem erro\n"); }
     ;
 
 classe
@@ -223,9 +225,10 @@ termoAux
 
 fator
     : TK_ID { $$ = newFator(1, $1, NULL); }
-    | TK_NUMBER { $$ = newFator(2, NULL, NULL); }
-    | TK_PALAVRA { $$ = newFator(3, NULL, NULL); }
-    | TK_LPAR expressao TK_RPAR { $$ = newFator(4, NULL, $2); }
+    | TK_NINT { $$ = newFator(2, NULL, NULL); }
+    | TK_NFLOAT { $$ = newFator(3, NULL, NULL); }
+    | TK_PALAVRA { $$ = newFator(4, NULL, NULL); }
+    | TK_LPAR expressao TK_RPAR { $$ = newFator(5, NULL, $2); }
     ;
 
 expressao_condicional

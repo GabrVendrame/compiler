@@ -18,6 +18,7 @@ struct arv *newArv(int tipo_no, struct arv *esq, struct arv *dir) {
 
     return arvore;
 }
+
 struct classe *newClasse(char *id, struct declaracao *d) {
     struct classe *arvore = (struct classe*)malloc(sizeof(struct classe));
 
@@ -31,6 +32,7 @@ struct classe *newClasse(char *id, struct declaracao *d) {
 
     return arvore;
 }
+
 struct classes *newClasses(struct classe *cl, struct classes *cls) {
     struct classes *arvore = (struct classes*)malloc(sizeof(struct classes));
 
@@ -44,6 +46,7 @@ struct classes *newClasses(struct classe *cl, struct classes *cls) {
 
     return arvore;
 }
+
 struct funcao *newFuncao(int tipo_regra, char *id, struct parametros *p, struct comandos *c, struct expressao *e, struct exp_bool *ep) {
     struct funcao *arvore = (struct funcao*)malloc(sizeof(struct funcao));
 
@@ -61,6 +64,7 @@ struct funcao *newFuncao(int tipo_regra, char *id, struct parametros *p, struct 
 
     return arvore;
 }
+
 struct funcoes *newFuncoes(struct funcao *f, struct funcoes *fs) {
     struct funcoes *arvore = (struct funcoes*)malloc(sizeof(struct funcoes));
 
@@ -74,6 +78,7 @@ struct funcoes *newFuncoes(struct funcao *f, struct funcoes *fs) {
 
     return arvore;
 }
+
 struct parametros *newParametros(int tipo_regra, char *id, struct tipo *t, struct parametrosAux *pA) {
     struct parametros *arvore = (struct parametros*)malloc(sizeof(struct parametros));
 
@@ -115,6 +120,7 @@ struct main *newMain(struct comandos *c) {
 
     return arvore;
 }
+
 struct comandos *newComandos(int tipo_regra, struct declaracao *d, struct atribuicao *a, struct exp_cond *ec, struct exp_rep *er, struct exp_scan *es, struct exp_print *ep, struct comandos *c) {
     struct comandos *arvore = (struct comandos*)malloc(sizeof(struct comandos));
 
@@ -134,6 +140,7 @@ struct comandos *newComandos(int tipo_regra, struct declaracao *d, struct atribu
 
     return arvore;
 }
+
 struct declaracao *newDeclaracao(int tipo_regra, struct tipo *t, struct tipo_array *ta, struct tipo_classe *tc, struct atribuicao *a) {
     struct declaracao *arvore = (struct declaracao*)malloc(sizeof(struct declaracao));
 
@@ -150,6 +157,7 @@ struct declaracao *newDeclaracao(int tipo_regra, struct tipo *t, struct tipo_arr
 
     return arvore;
 }
+
 struct atribuicao *newAtribuicao(int tipo_regra, char *id, struct expressao *e, struct conteudo_array *ca, struct parametros_chamada_funcao *pcf) {
     struct atribuicao *arvore = (struct atribuicao*)malloc(sizeof(struct atribuicao));
 
@@ -166,6 +174,7 @@ struct atribuicao *newAtribuicao(int tipo_regra, char *id, struct expressao *e, 
 
     return arvore;
 }
+
 struct conteudo_array *newConteudoArray(int tipo_regra, struct expressao *e, struct conteudo_arrayAux *caA) {
     struct conteudo_array *arvore = (struct conteudo_array*)malloc(sizeof(struct conteudo_array));
 
@@ -180,6 +189,7 @@ struct conteudo_array *newConteudoArray(int tipo_regra, struct expressao *e, str
 
     return arvore;
 }
+
 struct conteudo_arrayAux *newConteudoArrayAux(int tipo_regra, struct expressao *e, struct conteudo_arrayAux *caA) {
     struct conteudo_arrayAux *arvore = (struct conteudo_arrayAux*)malloc(sizeof(struct conteudo_arrayAux));
 
@@ -194,6 +204,7 @@ struct conteudo_arrayAux *newConteudoArrayAux(int tipo_regra, struct expressao *
 
     return arvore;
 }
+
 struct tipo *newTipo(char tipo_token) {
     struct tipo *arvore = (struct tipo*)malloc(sizeof(struct tipo));
 
@@ -219,6 +230,7 @@ struct tipo_array *newTipoArray(struct tipo *t) {
 
     return arvore;
 }
+
 struct tipo_classe *newTipoClasse(char *id) {
     struct tipo_classe *arvore = (struct tipo_classe*)malloc(sizeof(struct tipo_classe));
 
@@ -231,6 +243,7 @@ struct tipo_classe *newTipoClasse(char *id) {
 
     return arvore;
 }
+
 struct parametros_chamada_funcao *newParametrosChamadaFuncao(int tipo_regra, struct expressao *e, struct parametros_chamada_funcaoAux *pcfA) {
     struct parametros_chamada_funcao *arvore = (struct parametros_chamada_funcao*)malloc(sizeof(struct parametros_chamada_funcao));
 
@@ -274,6 +287,7 @@ struct expressao *newExpressao(struct termo *t, struct expressaoAux *eA) {
 
     return arvore;
 }
+
 struct expressaoAux *newExpressaoAux(int tipo_regra, struct termo *t, struct expressaoAux *eA) {
     struct expressaoAux *arvore = (struct expressaoAux*)malloc(sizeof(struct expressaoAux));
 
@@ -288,6 +302,7 @@ struct expressaoAux *newExpressaoAux(int tipo_regra, struct termo *t, struct exp
 
     return arvore;
 }
+
 struct termo *newTermo(struct fator *f, struct termoAux *tA) {
     struct termo *arvore = (struct termo*)malloc(sizeof(struct termo));
 
@@ -301,6 +316,7 @@ struct termo *newTermo(struct fator *f, struct termoAux *tA) {
 
     return arvore;
 }
+
 struct termoAux *newTermoAux(int tipo_regra, struct fator *f, struct termoAux *tA) {
     struct termoAux *arvore = (struct termoAux*)malloc(sizeof(struct termoAux));
 
@@ -315,6 +331,7 @@ struct termoAux *newTermoAux(int tipo_regra, struct fator *f, struct termoAux *t
 
     return arvore;
 }
+
 struct fator *newFator(int tipo_regra, char *id, struct expressao *e) {
     struct fator *arvore = (struct fator*)malloc(sizeof(struct fator));
 
@@ -329,6 +346,7 @@ struct fator *newFator(int tipo_regra, char *id, struct expressao *e) {
 
     return arvore;
 }
+
 struct exp_cond *newExpCond(int tipo_regra, struct exp_bool *eb, struct comandos *c, struct comandos *ce) {
     struct exp_cond *arvore = (struct exp_cond*)malloc(sizeof(struct exp_cond));
 
@@ -344,6 +362,7 @@ struct exp_cond *newExpCond(int tipo_regra, struct exp_bool *eb, struct comandos
 
     return arvore;
 }
+
 struct exp_bool *newExpBool(struct termo_booleano *tb, struct exp_boolAux *ebA) {
     struct exp_bool *arvore = (struct exp_bool*)malloc(sizeof(struct exp_bool));
 
@@ -385,6 +404,7 @@ struct termo_booleano *newTermoBooleano(struct fator_booleano *fb, struct termo_
 
     return arvore;
 }
+
 struct termo_booleanoAux *newTermoBooleanoAux(struct fator_booleano *fb, struct termo_booleanoAux *tbA) {
     struct termo_booleanoAux *arvore = (struct termo_booleanoAux*)malloc(sizeof(struct termo_booleanoAux));
 
@@ -398,6 +418,7 @@ struct termo_booleanoAux *newTermoBooleanoAux(struct fator_booleano *fb, struct 
 
     return arvore;
 }
+
 struct fator_booleano *newFatorBooleano(int tipo_regra, struct comparacao *c, struct exp_bool *eb) {
     struct fator_booleano *arvore = (struct fator_booleano*)malloc(sizeof(struct fator_booleano));
 
@@ -412,6 +433,7 @@ struct fator_booleano *newFatorBooleano(int tipo_regra, struct comparacao *c, st
 
     return arvore;
 }
+
 struct comparacao *newComparacao(struct expressao *e, struct op_logico *ol, struct expressao *e2) {
     struct comparacao *arvore = (struct comparacao*)malloc(sizeof(struct comparacao));
 
@@ -426,6 +448,7 @@ struct comparacao *newComparacao(struct expressao *e, struct op_logico *ol, stru
 
     return arvore;
 }
+
 struct op_logico *newOpLogico(char *tipo_token) {
     struct op_logico *arvore = (struct op_logico*)malloc(sizeof(struct op_logico));
 
@@ -438,6 +461,7 @@ struct op_logico *newOpLogico(char *tipo_token) {
 
     return arvore;
 }
+
 struct exp_rep *newExpRep(struct exp_bool *eb, struct comandos *c) {
     struct exp_rep *arvore = (struct exp_rep*)malloc(sizeof(struct exp_rep));
 
@@ -451,6 +475,7 @@ struct exp_rep *newExpRep(struct exp_bool *eb, struct comandos *c) {
 
     return arvore;
 }
+
 struct exp_scan *newScan(char *id) {
     struct exp_scan *arvore = (struct exp_scan*)malloc(sizeof(struct exp_scan));
 
@@ -463,6 +488,7 @@ struct exp_scan *newScan(char *id) {
 
     return arvore;
 }
+
 struct exp_print *newPrint(int tipo_regra, struct expressao *e, struct exp_bool *eb) {
     struct exp_print *arvore = (struct exp_print*)malloc(sizeof(struct exp_print));
 
@@ -478,16 +504,7 @@ struct exp_print *newPrint(int tipo_regra, struct expressao *e, struct exp_bool 
     return arvore;
 }
 
-void preOrdem(struct arv *arv) {
-    if (arv == NULL) return;
-    preOrdem(arv->esq);
-    printf("%d", arv->tipo_no);
-    preOrdem(arv->dir);
-    printf("%d", arv->tipo_no);
-}
-
-double parser(struct arv *arvore){
-    preOrdem(arvore);
+double seman(struct arv *arvore){
 }
 
 void yyerror(const char *s){
