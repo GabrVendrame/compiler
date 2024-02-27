@@ -1,0 +1,45 @@
+classe minhaClasse {
+    real madrid = 15.0;
+}
+
+funcao fazAlgo(){
+    inteiro x = 0;
+    devolva x;
+}
+
+funcao fazAlgo2(inteiro x, real madrid){
+    mostrar(x);
+    mostrar(madrid);
+    devolva madrid;
+}
+
+principal() {
+    minhaClasse novaInstancia = novo minhaClasse();
+    inteiro teste = fazAlgo();
+    inteiro teste2 = fazAlgo2(teste, x);
+    teste = fazAlgo2("test", 10);
+    inteiro x = 2;
+    real madrid = 0.0;
+    caracter c = "c";
+    cadeia palavra = "string";
+    arranjo<inteiro> vetor = [];
+    arranjo<inteiro> outroVetor = [14];
+    arranjo<real> madrid = [14, 0];
+    arranjo<caracter> tng = ["t", "n", "g"];
+    z = 2 + 4 * (4 - 2) / 1;
+    se(nao x == 2){
+        madrid = 2;
+    }
+
+    se(x == 1){
+        mostrar(madrid);
+    } senao {
+        ler(barca);
+        mostrar(barca);
+    }
+
+    se(nao x == 1 e y == 2){
+        c = "v";
+    }
+    int x = 1;
+}
