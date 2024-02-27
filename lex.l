@@ -54,7 +54,7 @@
 ">=" { printf("%s\n", yytext); return TK_GE; }
 "==" { printf("%s\n", yytext); return TK_EQ; }
 
-[a-zA-Z][a-zA-Z0-9]* { /*printf("id: %s\n", yytext);*/ return TK_ID; }
+[a-zA-Z][a-zA-Z0-9]* { printf("%s\n", yytext); return TK_ID; }
 [0-9]+ { printf("%s\n", yytext); return TK_NINT; }
 [0-9]+"."+[0-9]+ { printf("%s\n", yytext); return TK_NFLOAT; }
 [a-zA-Z_]?\"(\\.|[^\\"])*\" { printf("%s\n", yytext); return TK_PALAVRA; }

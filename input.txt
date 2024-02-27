@@ -1,5 +1,5 @@
 classe minhaClasse {
-    real madrid = 15;
+    real madrid = 15.0;
 }
 
 funcao fazAlgo(){
@@ -19,7 +19,7 @@ principal() {
     inteiro teste2 = fazAlgo2(teste, x);
     teste = fazAlgo2("test", 10);
     inteiro x = 2;
-    real madrid = 0;
+    real madrid = 0.0;
     caracter c = "c";
     cadeia palavra = "string";
     arranjo<inteiro> vetor = [];
